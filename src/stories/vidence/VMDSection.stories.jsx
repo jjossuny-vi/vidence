@@ -1,7 +1,7 @@
 import VMDSection from '../../components/vidence/sections/VMDSection';
 
 export default {
-  title: 'Custom Component/VIDENCE/VMDSection',
+  title: 'Section/VIDENCE/VMDSection',
   component: VMDSection,
   tags: ['autodocs'],
   parameters: {

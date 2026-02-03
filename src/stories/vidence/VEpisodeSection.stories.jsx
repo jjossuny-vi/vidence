@@ -1,7 +1,7 @@
 import VEpisodeSection from '../../components/vidence/sections/VEpisodeSection';
 
 export default {
-  title: 'Custom Component/VIDENCE/VEpisodeSection',
+  title: 'Section/VIDENCE/VEpisodeSection',
   component: VEpisodeSection,
   tags: ['autodocs'],
   parameters: {

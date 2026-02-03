@@ -1,7 +1,7 @@
 import VCollectionSection from '../../components/vidence/sections/VCollectionSection';
 
 export default {
-  title: 'Custom Component/VIDENCE/VCollectionSection',
+  title: 'Section/VIDENCE/VCollectionSection',
   component: VCollectionSection,
   tags: ['autodocs'],
   parameters: {

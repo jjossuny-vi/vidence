@@ -1,7 +1,7 @@
 import VHeroSection from '../../components/vidence/sections/VHeroSection';
 
 export default {
-  title: 'Custom Component/VIDENCE/VHeroSection',
+  title: 'Section/VIDENCE/VHeroSection',
   component: VHeroSection,
   tags: ['autodocs'],
   parameters: {
@@ -10,7 +10,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div style={ { marginTop: '-40px', backgroundColor: '#FFFFFF' } }>
+      <div style={{ marginTop: '-40px', backgroundColor: '#FFFFFF' }}>
         <Story />
       </div>
     ),

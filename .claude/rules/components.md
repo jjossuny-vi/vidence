@@ -11,18 +11,24 @@ VIDENCE 브랜드를 위한 전용 컴포넌트. Figma 디자인 기반 구현.
 - VMenu: 메뉴 아이템. GNB, CTA 버튼 등에서 재사용. label, isActive, hasUnderline, variant 지원 (`components/vidence/shared/VMenu.jsx`)
 - VHorizontalDivider: 3단 분할 페이지 구분선. activeIndex로 현재 위치 표시 (`components/vidence/shared/VHorizontalDivider.jsx`)
 - VBreadcrumb: 세로 방향 카테고리 라벨. Hero, Video 섹션 좌측 사용 (`components/vidence/shared/VBreadcrumb.jsx`)
+- VBoxButton: 박스형 버튼. outlined/filled variant, small/medium/large 크기. 더보기, 장바구니 담기 등 (`components/vidence/shared/VBoxButton.jsx`)
+- VLikeButton: 좋아요/위시리스트 버튼. isLiked 상태, small/medium/large 크기 (`components/vidence/shared/VLikeButton.jsx`)
+- VListTitle: 섹션 타이틀. 카테고리 제목 + 설명 텍스트. left/center 정렬 (`components/vidence/shared/VListTitle.jsx`)
+- VProductFilter: 상품 필터. 카테고리 탭 + 필터/정렬 컨트롤 (`components/vidence/shared/VProductFilter.jsx`)
 
 ### Cards (카드)
 
 - VCategoryCard: 카테고리 카드. 이미지 + 오버레이 + 라벨 (`components/vidence/cards/VCategoryCard.jsx`)
 - VEpisodeCard: 에피소드 카드. 커버 이미지 + 에피소드 번호/제목. size(large/small) 지원 (`components/vidence/cards/VEpisodeCard.jsx`)
-- VProductCard: 상품 카드. 이미지 + 상품명 (`components/vidence/cards/VProductCard.jsx`)
+- VProductCard: 상품 카드. 다양한 variants 지원 (NEW 태그, 품절, 할인가, 캐로셀, 컬러 옵션, 좋아요). 이미지 + 상품명 + 가격 (`components/vidence/cards/VProductCard.jsx`)
 - VSNSCard: SNS 피드 카드. 이미지 + 비디오 아이콘(선택) (`components/vidence/cards/VSNSCard.jsx`)
+- VBannerCard: 배너 카드. 프로모션/컬렉션 배너. small/large 크기. 이미지 + 카테고리 라벨 + 타이틀(large) (`components/vidence/cards/VBannerCard.jsx`)
 
 ### Sections (섹션)
 
 - VGNB: 글로벌 네비게이션 바. 로고 + 메뉴 + 사용자 아이콘 (`components/vidence/sections/VGNB.jsx`)
 - VHeroSection: 메인 히어로 섹션. 전체 화면 이미지 + 제목 + CTA + 구분선 (`components/vidence/sections/VHeroSection.jsx`)
+- VCollectionHero: 컬렉션 히어로 섹션. 전체 화면 이미지 + 중앙 타이틀 + 오버레이. 심플한 컬렉션 배너용 (`components/vidence/sections/VCollectionHero.jsx`)
 - VVideoSection: 비디오/이미지 갤러리 섹션. 비디오 썸네일 + 정적 이미지 + 설명 (`components/vidence/sections/VVideoSection.jsx`)
 - VStoreSection: 팝업 스토어 소개 섹션. 전체 너비 이미지 + 세로 라벨 + 설명 (`components/vidence/sections/VStoreSection.jsx`)
 - VCollectionSection: 카테고리 컬렉션 섹션. VCategoryCard 그리드 (`components/vidence/sections/VCollectionSection.jsx`)
@@ -30,10 +36,12 @@ VIDENCE 브랜드를 위한 전용 컴포넌트. Figma 디자인 기반 구현.
 - VMDSection: MD 추천 상품 섹션. VProductCard 그리드 + 설명 (`components/vidence/sections/VMDSection.jsx`)
 - VSNSSection: SNS 피드 갤러리 섹션. VSNSCard 그리드 + 설명 (`components/vidence/sections/VSNSSection.jsx`)
 - VFooter: 푸터. 링크 섹션 4개 + 저작권 (`components/vidence/sections/VFooter.jsx`)
+- VProductListSection: 상품 목록 섹션. 타이틀 + 필터 + 상품 그리드 + 더보기 버튼. VListTitle, VProductFilter, VProductCard, VBannerCard, VBoxButton 통합 (`components/vidence/sections/VProductListSection.jsx`)
 
 ### Pages (페이지)
 
 - VidenceMainPage: VIDENCE 메인 페이지. 모든 섹션 통합 (`pages/VidenceMainPage.jsx`)
+- ProductShowcasePage: VIDENCE 상품 쇼케이스 페이지. VGNB + VCollectionHero + VProductListSection + VFooter 조합 (`pages/ProductShowcasePage.jsx`)
 
 ### 예정 (향후 구현)
 

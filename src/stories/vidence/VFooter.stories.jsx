@@ -1,7 +1,7 @@
 import VFooter from '../../components/vidence/sections/VFooter';
 
 export default {
-  title: 'Custom Component/VIDENCE/VFooter',
+  title: 'Section/VIDENCE/VFooter',
   component: VFooter,
   tags: ['autodocs'],
   parameters: {

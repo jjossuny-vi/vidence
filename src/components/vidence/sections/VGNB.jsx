@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -7,11 +8,13 @@ import { VMenu } from '../shared';
 /**
  * VGNB 컴포넌트
  * VIDENCE 글로벌 네비게이션 바
+ * 스크롤 시 sticky 되면서 배경이 투명해짐
  *
  * Props:
  * @param {Array} menuItems - 좌측 메뉴 아이템 배열 [Optional]
  * @param {Array} userMenuItems - 우측 사용자 메뉴 아이템 배열 [Optional]
  * @param {number} activeMenuIndex - 활성 메뉴 인덱스 [Optional]
+ * @param {number} scrollThreshold - 스크롤 임계값 (px) [Optional, 기본값: 50]
  * @param {function} onMenuClick - 메뉴 클릭 핸들러 [Optional]
  * @param {function} onLogoClick - 로고 클릭 핸들러 [Optional]
  * @param {function} onSearchClick - 검색 아이콘 클릭 [Optional]
@@ -27,6 +30,7 @@ function VGNB({
   menuItems = ['NEW IN', 'CLOTHING', 'SHOES', 'BAGS', 'ACC'],
   userMenuItems = ['COLLECTIONS', 'ORR STORY'],
   activeMenuIndex = -1,
+  scrollThreshold = 50,
   onMenuClick,
   onLogoClick,
   onSearchClick,
@@ -35,6 +39,19 @@ function VGNB({
   onMenuToggle,
   sx = {},
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > scrollThreshold);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [scrollThreshold]);
+
   return (
     <Box
       component="header"
@@ -43,11 +60,14 @@ function VGNB({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        position: 'relative',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1100,
         px: { xs: 2, md: 5 },
         pt: 0,
         pb: 2,
-        backgroundColor: 'background.default',
+        backgroundColor: isScrolled ? 'transparent' : 'background.default',
+        transition: 'background-color 0.3s ease',
         ...sx,
       }}
     >
