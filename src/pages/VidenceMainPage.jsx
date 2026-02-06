@@ -34,7 +34,7 @@ function VidenceMainPage({
 }) {
   // Default data for demonstration
   const defaultHeroData = {
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=1600&h=2000&fit=crop',
+    image: '/src/assets/hero-main.png',
     headline: ['WEEKEND', 'EDITION'],
     ...heroData,
   };
