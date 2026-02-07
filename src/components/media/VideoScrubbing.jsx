@@ -17,6 +17,7 @@ const VideoScrubbing = ({
   sx = {},
   scrollRange = { start: 0, end: 1 },
   onProgressChange,
+  manualProgress = null,
   ...props
 }) => {
   const videoRef = useRef(null);
@@ -58,9 +59,42 @@ const VideoScrubbing = ({
     return () => observer.disconnect();
   }, []);
 
+  // Update video time based on manualProgress or scroll
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !isInView) return;
+    if (!video) return;
+
+    // specific frame update logic
+    const updateTime = (progress) => {
+      // Apply scroll range mapping
+      const { start, end } = scrollRange;
+      const remappedProgress = (progress - start) / (end - start);
+
+      // Clamp between 0 and 1
+      const clampedProgress = Math.max(0, Math.min(1, remappedProgress));
+
+      // Callback
+      if (onProgressChange) {
+        onProgressChange(clampedProgress);
+      }
+
+      // Update video time
+      if (video.duration) {
+        const targetTime = video.duration * clampedProgress;
+        if (Math.abs(video.currentTime - targetTime) > 0.033) {
+          video.currentTime = targetTime;
+        }
+      }
+    };
+
+    // If manualProgress is provided, use it directly
+    if (manualProgress !== null) {
+      updateTime(manualProgress);
+      return;
+    }
+
+    // Otherwise, use scroll-based logic
+    if (!isInView) return;
 
     let animationFrameId = null;
     let lastScrollTime = 0;
@@ -91,25 +125,7 @@ const VideoScrubbing = ({
         progress = (scrollY - videoOffsetTop) / videoHeight;
       }
 
-      // Apply scroll range mapping
-      const { start, end } = scrollRange;
-      progress = (progress - start) / (end - start);
-
-      // Clamp between 0 and 1
-      progress = Math.max(0, Math.min(1, progress));
-
-      // Callback
-      if (onProgressChange) {
-        onProgressChange(progress);
-      }
-
-      // Update video time
-      if (video.duration) {
-        const targetTime = video.duration * progress;
-        if (Math.abs(video.currentTime - targetTime) > 0.033) {
-          video.currentTime = targetTime;
-        }
-      }
+      updateTime(progress);
 
       animationFrameId = requestAnimationFrame(updateVideoTime);
     };
@@ -130,7 +146,7 @@ const VideoScrubbing = ({
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [isInView, containerRef, scrollRange, onProgressChange]);
+  }, [isInView, containerRef, scrollRange, onProgressChange, manualProgress]);
 
   return (
     <Box

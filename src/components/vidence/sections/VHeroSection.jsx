@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { VMenu } from '../shared';
@@ -8,6 +8,11 @@ import VideoScrubbing from '../../media/VideoScrubbing';
  * VHeroSection 컴포넌트
  * VIDENCE 메인 히어로 섹션. 전체 화면 이미지/비디오 + 제목 + CTA
  * 스크롤 시 비디오가 프레임 단위로 재생되는 스크러빙 효과 지원
+ * 
+ * Interaction:
+ * 1. Text moves down
+ * 2. Video scrubs
+ * 3. Section unpins
  *
  * Props:
  * @param {string} image - 히어로 이미지 URL [Optional]
@@ -16,25 +21,14 @@ import VideoScrubbing from '../../media/VideoScrubbing';
  * @param {string} breadcrumbLabel - 좌측 세로 라벨 텍스트 [Optional, 기본값: 'JUST DROPPED THIS WEEK']
  * @param {string} ctaLabel - CTA 버튼 텍스트 [Optional, 기본값: 'Discover']
  * @param {function} onCtaClick - CTA 클릭 핸들러 [Optional]
- * @param {number} height - 섹션 높이 [Optional, 기본값: 1000]
- * @param {object} scrollRange - 비디오 스크롤 범위 { start: 0, end: 1 } [Optional]
+ * @param {number} height - 섹션 높이 [Optional, 기본값: 1000] - *Ignored in sticky mode*
+ * @param {object} scrollRange - 비디오 스크롤 범위 { start: 0, end: 1 } [Optional] - *Ignored in sequenced mode*
  * @param {object} sx - 추가 스타일 [Optional]
- *
- * Example usage:
- * <VHeroSection
- *   video="/assets/video/hero-main.mp4"
- *   headline={['WEEKEND', 'EDITION']}
- * />
- *
- * <VHeroSection
- *   image="/images/hero.jpg"
- *   headline={['THE', 'WINTER', 'BLAZER']}
- * />
  */
 function VHeroSection({
   image,
   video,
-  headline = ['WEEKEND', 'EDITION'],
+  headline = ['WEEKEND EDITION'],
   breadcrumbLabel = 'JUST DROPPED THIS WEEK',
   ctaLabel = 'Discover',
   onCtaClick,
@@ -42,27 +36,79 @@ function VHeroSection({
   scrollRange = { start: 0, end: 0.5 },
   sx = {},
 }) {
-  const containerRef = useRef(null);
+  const outerContainerRef = useRef(null);
   const useVideo = Boolean(video);
+
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!outerContainerRef.current) return;
+
+      const { top, height } = outerContainerRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Calculate progress based on how much of the container has been scrolled
+      // Start counting when top aligns with top of viewport (0)
+      // End when bottom aligns with bottom of viewport (approximated logic)
+
+      // Ideally: 
+      // Progress 0: Section starts at top of viewport
+      // Progress 1: Section ends scrolling
+
+      // Since it's sticky, the 'top' will eventually become negative as we scroll past the stickiness
+      // But we need to calculate based on the outer container's position relative to the viewport
+
+      const scrollDistance = -top;
+      const totalScrollableDistance = height - windowHeight;
+
+      let newProgress = scrollDistance / totalScrollableDistance;
+      newProgress = Math.max(0, Math.min(1, newProgress));
+
+      setProgress(newProgress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Sequence Logic
+  // 0.0 - 0.3: Text Animation (Translate Y)
+  // 0.3 - 1.0: Video Scrubbing
+
+  const textAnimationEnd = 0.3;
+
+  let textProgress = 0;
+  let videoProgress = 0;
+
+  if (progress < textAnimationEnd) {
+    textProgress = progress / textAnimationEnd;
+    videoProgress = 0;
+  } else {
+    textProgress = 1;
+    videoProgress = (progress - textAnimationEnd) / (1 - textAnimationEnd);
+  }
 
   return (
     <Box
-      ref={containerRef}
+      ref={outerContainerRef}
       sx={{
         position: 'relative',
         width: '100%',
-        height: { xs: 600, sm: 800, md: height },
+        height: '400vh', // Sticky track
         ...sx,
       }}
     >
-      {/* Hero Container */}
+      {/* Sticky Inner Container */}
       <Box
         sx={{
-          position: 'absolute',
+          position: 'sticky',
+          top: 0,
           left: 0,
-          bottom: 2,
           width: '100%',
-          height: { xs: 600, sm: 800, md: height },
+          height: '100vh',
           overflow: 'hidden',
         }}
       >
@@ -80,8 +126,8 @@ function VHeroSection({
             /* Video Background with Scrubbing */
             <VideoScrubbing
               src={video}
-              containerRef={containerRef}
-              scrollRange={scrollRange}
+              manualProgress={videoProgress}
+              scrollRange={{ start: 0, end: 1 }} // We handle mapping manually
               sx={{
                 position: 'absolute',
                 top: '50%',
@@ -128,11 +174,16 @@ function VHeroSection({
             top: '50%',
             // Mobile: left-aligned with padding, Desktop: center with offset
             left: { xs: 24, md: '50%' },
-            transform: { xs: 'translateY(-50%)', md: 'translate(-50%, -50%)' },
+            transform: {
+              xs: `translateY(calc(-50% + ${textProgress * 100}px))`,
+              md: `translate(-50%, calc(-50% + ${textProgress * 150}px))`
+            },
             ml: { xs: 0, md: -33 },
             display: 'flex',
             flexDirection: 'column',
             zIndex: 1,
+            opacity: 1 - videoProgress, // Fade out as video starts
+            transition: 'transform 0.1s linear, opacity 0.1s linear',
           }}
         >
           {headline.map((line, index) => (
@@ -159,7 +210,7 @@ function VHeroSection({
             left: 30,
             top: 106,
             width: 37,
-            height: height - 106,
+            height: 'calc(100% - 106px)',
             display: { xs: 'none', md: 'flex' },
             flexDirection: 'column',
             alignItems: 'center',
@@ -206,8 +257,9 @@ function VHeroSection({
             // Mobile: left-aligned with padding, Desktop: centered
             left: { xs: 24, md: '50%' },
             transform: { xs: 'none', md: 'translateX(-50%)' },
-            bottom: { xs: 80, md: height - 900 },
+            bottom: { xs: 80, md: 100 },
             zIndex: 1,
+            opacity: 1 - videoProgress, // Fade out as video starts
           }}
         >
           <VMenu

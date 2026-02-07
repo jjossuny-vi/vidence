@@ -53,7 +53,7 @@ export default {
 export const Default = {
   args: {
     image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=1600&h=2000&fit=crop',
-    headline: ['WEEKEND', 'EDITION'],
+    headline: ['WEEKEND EDITION'],
     breadcrumbLabel: 'JUST DROPPED THIS WEEK',
     ctaLabel: 'Discover',
     height: 1000,
@@ -63,7 +63,7 @@ export const Default = {
 export const WithVideo = {
   args: {
     video: '/src/assets/video/hero-main.mp4',
-    headline: ['WEEKEND', 'EDITION'],
+    headline: ['WEEKEND EDITION'],
     breadcrumbLabel: 'JUST DROPPED THIS WEEK',
     ctaLabel: 'Discover',
     height: 1000,
