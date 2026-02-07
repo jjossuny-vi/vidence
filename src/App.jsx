@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { defaultTheme as theme } from './styles/themes';
 import VidenceMainPage from './pages/VidenceMainPage';
+import ProductShowcasePage from './pages/ProductShowcasePage';
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<VidenceMainPage />} />
+          <Route path="/showcase" element={<ProductShowcasePage />} />
+
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

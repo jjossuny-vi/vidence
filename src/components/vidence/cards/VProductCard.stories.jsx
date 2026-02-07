@@ -3,7 +3,9 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const sampleImage = 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=600&fit=crop';
+// 로컬 상품 이미지/비디오
+import product001Image from '../../../assets/product/product_001.png';
+import product001Video from '../../../assets/product/product_001_hover.mp4';
 
 export default {
   title: 'Custom Component/VIDENCE/Cards/VProductCard',
@@ -13,6 +15,10 @@ export default {
     image: {
       control: 'text',
       description: '상품 이미지 URL',
+    },
+    video: {
+      control: 'text',
+      description: '호버 시 재생될 비디오 URL',
     },
     title: {
       control: 'text',
@@ -102,7 +108,19 @@ export default {
 
 export const Default = {
   args: {
-    image: sampleImage,
+    image: product001Image,
+    video: product001Video,
+    title: 'Cashmere 100 V-neck Knit Gray',
+    price: 298,
+    width: 336,
+    imageHeight: 450,
+  },
+};
+
+export const WithHoverVideo = {
+  args: {
+    image: product001Image,
+    video: product001Video,
     title: 'Cashmere 100 V-neck Knit Gray',
     price: 298,
     width: 336,
@@ -112,7 +130,8 @@ export const Default = {
 
 export const WithNewTag = {
   args: {
-    image: sampleImage,
+    image: product001Image,
+    video: product001Video,
     title: 'Cashmere 100 V-neck Knit Gray',
     price: 298,
     isNew: true,
@@ -121,7 +140,8 @@ export const WithNewTag = {
 
 export const WithPreOrder = {
   args: {
-    image: sampleImage,
+    image: product001Image,
+    video: product001Video,
     title: 'Cashmere 100 V-neck Knit Gray',
     price: 298,
     isPreOrder: true,
@@ -130,7 +150,8 @@ export const WithPreOrder = {
 
 export const WithSalePrice = {
   args: {
-    image: sampleImage,
+    image: product001Image,
+    video: product001Video,
     title: 'Cashmere 100 V-neck Knit Gray',
     price: 298,
     originalPrice: 398,
@@ -140,7 +161,8 @@ export const WithSalePrice = {
 
 export const OutOfStock = {
   args: {
-    image: sampleImage,
+    image: product001Image,
+    video: product001Video,
     title: 'Cashmere 100 V-neck Knit Gray',
     price: 298,
     isOutOfStock: true,
@@ -149,7 +171,8 @@ export const OutOfStock = {
 
 export const WithCarousel = {
   args: {
-    image: sampleImage,
+    image: product001Image,
+    video: product001Video,
     title: 'Cashmere 100 V-neck Knit Gray',
     description: 'early access to new products, exclusive deals',
     price: 298,
@@ -163,7 +186,8 @@ export const WithCarousel = {
 
 export const WithCollectionTag = {
   args: {
-    image: sampleImage,
+    image: product001Image,
+    video: product001Video,
     title: 'Cashmere 100 V-neck Knit Gray',
     description: 'early access to new products, exclusive deals',
     price: 298,
@@ -180,7 +204,8 @@ export const AllVariants = {
     <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ maxWidth: 1400 }}>
       <Box sx={{ textAlign: 'center' }}>
         <VProductCard
-          image={sampleImage}
+          image={product001Image}
+          video={product001Video}
           title="Default"
           price={298}
           width={280}
@@ -192,7 +217,8 @@ export const AllVariants = {
       </Box>
       <Box sx={{ textAlign: 'center' }}>
         <VProductCard
-          image={sampleImage}
+          image={product001Image}
+          video={product001Video}
           title="With NEW Tag"
           price={298}
           isNew
@@ -205,7 +231,8 @@ export const AllVariants = {
       </Box>
       <Box sx={{ textAlign: 'center' }}>
         <VProductCard
-          image={sampleImage}
+          image={product001Image}
+          video={product001Video}
           title="With Sale"
           price={298}
           originalPrice={398}
@@ -219,7 +246,8 @@ export const AllVariants = {
       </Box>
       <Box sx={{ textAlign: 'center' }}>
         <VProductCard
-          image={sampleImage}
+          image={product001Image}
+          video={product001Video}
           title="Out of Stock"
           price={298}
           isOutOfStock

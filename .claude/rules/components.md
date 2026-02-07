@@ -26,7 +26,8 @@ VIDENCE 브랜드를 위한 전용 컴포넌트. Figma 디자인 기반 구현.
 
 ### Sections (섹션)
 
-- VGNB: 글로벌 네비게이션 바. 로고 + 메뉴 + 사용자 아이콘 (`components/vidence/sections/VGNB.jsx`)
+- VAppShell: VIDENCE 앱 셸. VGNB(헤더) + VFooter(푸터) 통합 레이아웃. 스크롤 시 GNB sticky + 배경 투명 효과. 모든 VIDENCE 페이지의 기본 레이아웃 (`components/vidence/sections/VAppShell.jsx`)
+- VGNB: 글로벌 네비게이션 바. 로고 + 메뉴 + 사용자 아이콘. 스크롤 시 sticky + 배경 투명 전환 (`components/vidence/sections/VGNB.jsx`)
 - VHeroSection: 메인 히어로 섹션. 전체 화면 이미지 + 제목 + CTA + 구분선 (`components/vidence/sections/VHeroSection.jsx`)
 - VCollectionHero: 컬렉션 히어로 섹션. 전체 화면 이미지 + 중앙 타이틀 + 오버레이. 심플한 컬렉션 배너용 (`components/vidence/sections/VCollectionHero.jsx`)
 - VVideoSection: 비디오/이미지 갤러리 섹션. 비디오 썸네일 + 정적 이미지 + 설명 (`components/vidence/sections/VVideoSection.jsx`)
@@ -40,8 +41,8 @@ VIDENCE 브랜드를 위한 전용 컴포넌트. Figma 디자인 기반 구현.
 
 ### Pages (페이지)
 
-- VidenceMainPage: VIDENCE 메인 페이지. 모든 섹션 통합 (`pages/VidenceMainPage.jsx`)
-- ProductShowcasePage: VIDENCE 상품 쇼케이스 페이지. VGNB + VCollectionHero + VProductListSection + VFooter 조합 (`pages/ProductShowcasePage.jsx`)
+- VidenceMainPage: VIDENCE 메인 페이지. VAppShell 기반으로 모든 섹션 통합 (`pages/VidenceMainPage.jsx`)
+- ProductShowcasePage: VIDENCE 상품 쇼케이스 페이지. VAppShell + VCollectionHero + VProductListSection 조합 (`pages/ProductShowcasePage.jsx`)
 
 ### 예정 (향후 구현)
 

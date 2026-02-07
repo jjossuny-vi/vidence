@@ -82,6 +82,7 @@ function VProductListSection({
       >
         <VProductCard
           image={item.image}
+          video={item.video}
           title={item.title}
           price={item.price}
           originalPrice={item.originalPrice}

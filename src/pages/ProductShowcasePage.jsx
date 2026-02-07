@@ -1,12 +1,12 @@
-import Box from '@mui/material/Box';
-import VGNB from '../components/vidence/sections/VGNB';
-import VCollectionHero from '../components/vidence/sections/VCollectionHero';
-import VProductListSection from '../components/vidence/sections/VProductListSection';
-import VFooter from '../components/vidence/sections/VFooter';
+import {
+  VAppShell,
+  VCollectionHero,
+  VProductListSection,
+} from '../components/vidence';
 
 /**
  * ProductShowcasePage 컴포넌트
- * VIDENCE 상품 쇼케이스 페이지. GNB + 히어로 + 상품 목록 + 푸터 조합
+ * VIDENCE 상품 쇼케이스 페이지. VAppShell(GNB + Footer) + 히어로 + 상품 목록 조합
  *
  * Props:
  * @param {string} heroImage - 히어로 배경 이미지 URL [Required]
@@ -66,61 +66,45 @@ function ProductShowcasePage({
   sx = {},
 }) {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        backgroundColor: 'background.default',
-        ...sx,
-      }}
+    <VAppShell
+      gnbMenuItems={gnbMenuItems}
+      gnbUserMenuItems={gnbUserMenuItems}
+      activeMenuIndex={activeMenuIndex}
+      onMenuClick={onMenuClick}
+      onLogoClick={onLogoClick}
+      onSearchClick={onSearchClick}
+      onUserClick={onUserClick}
+      onCartClick={onCartClick}
+      footerProps={{ onLinkClick: onFooterLinkClick }}
+      sx={sx}
     >
-      {/* Global Navigation Bar */}
-      <VGNB
-        menuItems={gnbMenuItems}
-        userMenuItems={gnbUserMenuItems}
-        activeMenuIndex={activeMenuIndex}
-        onMenuClick={onMenuClick}
-        onLogoClick={onLogoClick}
-        onSearchClick={onSearchClick}
-        onUserClick={onUserClick}
-        onCartClick={onCartClick}
-        sx={{ pt: 2 }}
+      {/* Collection Hero */}
+      <VCollectionHero
+        image={heroImage}
+        title={heroTitle}
+        overlayOpacity={heroOverlayOpacity}
+        height={812}
       />
 
-      {/* Main Content */}
-      <Box component="main" sx={{ flex: 1 }}>
-        {/* Collection Hero */}
-        <VCollectionHero
-          image={heroImage}
-          title={heroTitle}
-          overlayOpacity={heroOverlayOpacity}
-          height={812}
-        />
-
-        {/* Product List Section */}
-        <VProductListSection
-          title={categoryTitle}
-          description={categoryDescription}
-          categories={categories}
-          activeCategory={activeCategory}
-          sortOptions={sortOptions}
-          selectedSort={selectedSort}
-          filterCount={filterCount}
-          products={products}
-          hasMore={hasMore}
-          moreLabel={moreLabel}
-          onCategoryChange={onCategoryChange}
-          onSortChange={onSortChange}
-          onFilterClick={onFilterClick}
-          onProductClick={onProductClick}
-          onMoreClick={onMoreClick}
-        />
-      </Box>
-
-      {/* Footer */}
-      <VFooter onLinkClick={onFooterLinkClick} />
-    </Box>
+      {/* Product List Section */}
+      <VProductListSection
+        title={categoryTitle}
+        description={categoryDescription}
+        categories={categories}
+        activeCategory={activeCategory}
+        sortOptions={sortOptions}
+        selectedSort={selectedSort}
+        filterCount={filterCount}
+        products={products}
+        hasMore={hasMore}
+        moreLabel={moreLabel}
+        onCategoryChange={onCategoryChange}
+        onSortChange={onSortChange}
+        onFilterClick={onFilterClick}
+        onProductClick={onProductClick}
+        onMoreClick={onMoreClick}
+      />
+    </VAppShell>
   );
 }
 

@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -5,9 +6,11 @@ import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 /**
  * VProductCard 컴포넌트
  * VIDENCE 상품 카드. 다양한 variants 지원
+ * 호버 시 비디오 재생 기능 지원
  *
  * Props:
  * @param {string} image - 상품 이미지 URL [Required]
+ * @param {string} video - 호버 시 재생될 비디오 URL [Optional]
  * @param {string} title - 상품명 [Required]
  * @param {number} price - 가격 [Optional]
  * @param {number} originalPrice - 원가 (할인 시) [Optional]
@@ -38,6 +41,7 @@ import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
  * />
  * <VProductCard
  *   image="/images/product.jpg"
+ *   video="/videos/product.mp4"
  *   title="Cashmere 100 V-neck Knit Gray"
  *   price={298}
  *   originalPrice={398}
@@ -47,6 +51,7 @@ import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
  */
 function VProductCard({
   image,
+  video,
   title,
   price,
   originalPrice,
@@ -69,8 +74,32 @@ function VProductCard({
   onNextClick,
   sx = {},
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef(null);
   const hasColorOptions = colorOptions.length > 0;
   const showBottomBar = hasCarousel || hasColorOptions;
+
+  // hover 시 비디오 재생/정지
+  const handleMouseEnter = () => {
+    if (video) {
+      setIsHovered(true);
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.playbackRate = 2.5;
+        videoRef.current.play();
+      }
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (video) {
+      setIsHovered(false);
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
+  };
 
   return (
     <Box
@@ -87,6 +116,8 @@ function VProductCard({
       <Box
         component="button"
         onClick={onClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         sx={{
           position: 'relative',
           width: '100%',
@@ -109,8 +140,31 @@ function VProductCard({
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            opacity: video && isHovered ? 0 : 1,
+            transition: 'opacity 0.3s ease-in-out',
           }}
         />
+
+        {/* Hover Video */}
+        {video && (
+          <Box
+            component="video"
+            ref={videoRef}
+            src={video}
+            muted
+            loop
+            playsInline
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: isHovered ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out',
+            }}
+          />
+        )}
 
         {/* NEW Tag */}
         {isNew && !isOutOfStock && (

@@ -1,104 +1,10 @@
 import ProductShowcasePage from './ProductShowcasePage';
-
-const heroImage = 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1600&h=900&fit=crop';
-const productImage = 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=600&fit=crop';
-const bannerImage = 'https://images.unsplash.com/photo-1557683311-eac922347aa1?w=800&h=600&fit=crop';
-
-const defaultCategories = [
-  { label: 'ALL', value: 'all' },
-  { label: 'JACKET', value: 'jacket' },
-  { label: 'JUMPER', value: 'jumper' },
-  { label: 'COAT', value: 'coat' },
-  { label: 'DOWN', value: 'down' },
-];
-
-const defaultSortOptions = [
-  { label: 'NEW ITEM', value: 'new' },
-  { label: 'PRICE LOW', value: 'price_asc' },
-  { label: 'PRICE HIGH', value: 'price_desc' },
-];
-
-const sampleProducts = [
-  {
-    id: 1,
-    image: productImage,
-    title: 'Cashmere 100 V-neck Knit Gray',
-    price: 298,
-    isNew: true,
-  },
-  {
-    id: 2,
-    image: productImage,
-    title: 'Wool Blend Cardigan Navy',
-    price: 298,
-    description: 'early access to new products, exclusive deals',
-    hasCarousel: true,
-    colorOptions: ['#aca8a3', '#222'],
-  },
-  {
-    id: 3,
-    image: productImage,
-    title: 'Premium Mohair Sweater Beige',
-    price: 298,
-    isOutOfStock: true,
-  },
-  {
-    id: 4,
-    image: productImage,
-    title: 'Merino Wool Turtleneck Black',
-    price: 298,
-  },
-  {
-    id: 5,
-    image: productImage,
-    title: 'Alpaca Blend Pullover Ivory',
-    price: 298,
-    isPreOrder: true,
-  },
-  {
-    id: 6,
-    image: productImage,
-    title: 'Cotton Knit Vest Charcoal',
-    price: 298,
-    originalPrice: 398,
-    discountRate: 25,
-  },
-  {
-    id: 7,
-    image: productImage,
-    title: 'Cashmere Blend Hoodie Cream',
-    price: 298,
-  },
-  {
-    id: 8,
-    type: 'banner',
-    image: bannerImage,
-    category: 'GIFT COLLECTION',
-    size: 'small',
-  },
-  {
-    id: 9,
-    image: productImage,
-    title: 'Ribbed Knit Top White',
-    price: 198,
-  },
-  {
-    id: 10,
-    image: productImage,
-    title: 'Oversized Knit Dress Gray',
-    price: 398,
-    isNew: true,
-  },
-  {
-    id: 11,
-    type: 'banner',
-    image: bannerImage,
-    category: 'GIFT COLLECTION',
-    size: 'large',
-    title: 'CUBIC CYLINDER\nKEYRING',
-    ctaLabel: 'Discover',
-  },
-];
+import {
+  heroImages,
+  categories,
+  sortOptions,
+  sampleProducts,
+} from '../data/productShowcaseData';
 
 export default {
   title: 'Page/ProductShowcasePage',
@@ -182,14 +88,14 @@ export default {
 
 export const Default = {
   args: {
-    heroImage: heroImage,
+    heroImage: heroImages.default,
     heroTitle: 'LOVEMOMENT COLLECTION',
     heroOverlayOpacity: 0.2,
     categoryTitle: 'OUTER',
     categoryDescription: 'COMBINING CHIC AND MODERNITY,\nTHE ORR COLLECTION CREATIVELY INTERPRETS EVERY SEASON.',
-    categories: defaultCategories,
+    categories: categories,
     activeCategory: 'all',
-    sortOptions: defaultSortOptions,
+    sortOptions: sortOptions,
     selectedSort: 'new',
     filterCount: 0,
     products: sampleProducts,
@@ -200,14 +106,14 @@ export const Default = {
 
 export const WithActiveFilter = {
   args: {
-    heroImage: heroImage,
+    heroImage: heroImages.default,
     heroTitle: 'WINTER COLLECTION',
     heroOverlayOpacity: 0.3,
     categoryTitle: 'JACKET',
     categoryDescription: 'DISCOVER OUR PREMIUM JACKET COLLECTION.',
-    categories: defaultCategories,
+    categories: categories,
     activeCategory: 'jacket',
-    sortOptions: defaultSortOptions,
+    sortOptions: sortOptions,
     selectedSort: 'price_asc',
     filterCount: 2,
     products: sampleProducts.slice(0, 8),
@@ -218,7 +124,7 @@ export const WithActiveFilter = {
 
 export const Minimal = {
   args: {
-    heroImage: heroImage,
+    heroImage: heroImages.default,
     heroTitle: 'NEW ARRIVALS',
     heroOverlayOpacity: 0.15,
     categoryTitle: 'NEW IN',

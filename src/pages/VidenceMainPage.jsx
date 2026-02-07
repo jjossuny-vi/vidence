@@ -1,12 +1,10 @@
-import Box from '@mui/material/Box';
 import {
-  VGNB,
+  VAppShell,
   VHeroSection,
   VVideoSection,
   VStoreSection,
   VCollectionSection,
   VMDSection,
-  VFooter,
 } from '../components/vidence';
 
 /**
@@ -34,8 +32,9 @@ function VidenceMainPage({
 }) {
   // Default data for demonstration
   const defaultHeroData = {
-    image: '/src/assets/hero-main.png',
+    video: '/src/assets/video/hero-main.mp4',
     headline: ['WEEKEND', 'EDITION'],
+    scrollRange: { start: 0, end: 0.5 },
     ...heroData,
   };
 
@@ -97,17 +96,7 @@ function VidenceMainPage({
 
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        minHeight: '100vh',
-        backgroundColor: 'background.default',
-        overflowX: 'hidden',
-      }}
-    >
-      {/* GNB */}
-      <VGNB />
-
+    <VAppShell>
       {/* Hero Section */}
       <VHeroSection {...defaultHeroData} />
 
@@ -120,16 +109,9 @@ function VidenceMainPage({
       {/* Collection Section */}
       <VCollectionSection categories={defaultCategories} />
 
-
-
       {/* MD Section */}
       <VMDSection products={defaultProducts} />
-
-
-
-      {/* Footer */}
-      <VFooter />
-    </Box>
+    </VAppShell>
   );
 }
 
