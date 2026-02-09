@@ -14,34 +14,6 @@ export default {
     tags: ['autodocs'],
     parameters: {
         layout: 'fullscreen',
-    },
-    argTypes: {
-        image: {
-            control: 'text',
-            description: '스토어 이미지 URL',
-        },
-        storeLabel: {
-            control: 'text',
-            description: '좌측 세로 라벨',
-        },
-        description: {
-            control: 'text',
-            description: '설명 텍스트',
-        },
-        ctaLabel: {
-            control: 'text',
-            description: 'CTA 버튼 텍스트',
-        },
-        onCtaClick: {
-            action: 'ctaClicked',
-            description: 'CTA 클릭 핸들러',
-        },
-        sx: {
-            control: 'object',
-            description: '추가 스타일',
-        },
-    },
-    parameters: {
         docs: {
             description: {
                 component: 'VIDENCE 팝업 스토어 소개 섹션입니다.',
@@ -63,14 +35,8 @@ export default {
                                 <TableRow>
                                     <TableCell sx={{ fontFamily: 'monospace' }}>image</TableCell>
                                     <TableCell>string</TableCell>
-                                    <TableCell>-</TableCell>
-                                    <TableCell>스토어 이미지 URL [Required]</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell sx={{ fontFamily: 'monospace' }}>storeLabel</TableCell>
-                                    <TableCell>string</TableCell>
-                                    <TableCell>'@SUNGSU - POPUP STORE'</TableCell>
-                                    <TableCell>좌측 세로 라벨</TableCell>
+                                    <TableCell>main_store.png</TableCell>
+                                    <TableCell>스토어 이미지 URL</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell sx={{ fontFamily: 'monospace' }}>description</TableCell>
@@ -103,12 +69,33 @@ export default {
             ),
         },
     },
+    argTypes: {
+        image: {
+            control: 'text',
+            description: '스토어 이미지 URL',
+        },
+        description: {
+            control: 'text',
+            description: '설명 텍스트',
+        },
+        ctaLabel: {
+            control: 'text',
+            description: 'CTA 버튼 텍스트',
+        },
+        onCtaClick: {
+            action: 'ctaClicked',
+            description: 'CTA 클릭 핸들러',
+        },
+        sx: {
+            control: 'object',
+            description: '추가 스타일',
+        },
+    },
 };
 
 export const Default = {
     args: {
-        image: '/store-visual.png',
-        storeLabel: '@SUNGSU - POPUP STORE',
+        // image는 컴포넌트 기본값 사용 (main_store.png)
         description: "Reflecting the true value of our products.\nWe believe in the unique beauty that develops over time.",
         ctaLabel: 'Discover',
     },

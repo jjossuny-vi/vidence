@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { Menu, Search, User, ShoppingBag } from 'lucide-react';
+import { Menu, User, ShoppingBag } from 'lucide-react';
 import { VMenu } from '../shared';
 
 /**
@@ -28,7 +28,7 @@ import { VMenu } from '../shared';
  */
 function VGNB({
   menuItems = ['NEW IN', 'CLOTHING', 'SHOES', 'BAGS', 'ACC'],
-  userMenuItems = ['COLLECTIONS', 'ORR STORY'],
+  userMenuItems = ['COLLECTIONS', 'ABOUT'],
   activeMenuIndex = -1,
   scrollThreshold = 50,
   onMenuClick,
@@ -173,17 +173,6 @@ function VGNB({
               gap: { xs: 1.5, md: 2.5 },
             }}
           >
-            <IconButton
-              onClick={onSearchClick}
-              sx={{
-                width: 30,
-                height: 30,
-                p: 0,
-                color: 'primary.main',
-              }}
-            >
-              <Search size={20} strokeWidth={1.5} />
-            </IconButton>
             <IconButton
               onClick={onUserClick}
               sx={{

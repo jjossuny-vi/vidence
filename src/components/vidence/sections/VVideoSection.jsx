@@ -1,49 +1,66 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useRef, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { Play } from 'lucide-react';
 import { VMenu } from '../shared';
+
+// 기본 이미지 및 비디오
+import defaultFirstImage from '../../../assets/product/main_video_001.png';
+import defaultSecondImage from '../../../assets/product/main_video_002.png';
+import defaultSecondHoverVideo from '../../../assets/product/main_video_002_hover.mp4';
 
 /**
  * VVideoSection 컴포넌트
- * VIDENCE 비디오/이미지 갤러리 섹션
+ * VIDENCE 이미지 갤러리 섹션 (2컬럼 레이아웃)
  *
  * Props:
- * @param {string} videoThumbnail - 비디오 썸네일 이미지 URL [Required]
- * @param {string} staticImage - 정적 이미지 URL [Required]
+ * @param {string} firstImage - 좌측 이미지 URL (1col, 400px) [Optional]
+ * @param {string} secondImage - 우측 이미지 URL (2col, 4:3 비율) [Optional]
+ * @param {string} secondHoverVideo - 우측 hover 시 재생될 비디오 URL [Optional]
  * @param {string} description - 섹션 설명 텍스트 [Optional]
  * @param {string} ctaLabel - CTA 버튼 텍스트 [Optional, 기본값: 'Discover']
- * @param {string} breadcrumbCategory - 브레드크럼 카테고리 [Optional]
- * @param {string} breadcrumbSubcategory - 브레드크럼 서브카테고리 [Optional]
- * @param {function} onPlayClick - 재생 버튼 클릭 핸들러 [Optional]
  * @param {function} onCtaClick - CTA 클릭 핸들러 [Optional]
  * @param {object} sx - 추가 스타일 [Optional]
  *
  * Example usage:
  * <VVideoSection
- *   videoThumbnail="/images/video-thumb.jpg"
- *   staticImage="/images/static.jpg"
+ *   firstImage="/images/first.jpg"
+ *   secondImage="/images/second.jpg"
  * />
  */
 function VVideoSection({
-  videoThumbnail,
-  staticImage,
-  description = 'Share your own style on Instagram',
+  firstImage = defaultFirstImage,
+  secondImage = defaultSecondImage,
+  secondHoverVideo = defaultSecondHoverVideo,
+  description = 'SS 2026 A Season Touched by Natural Elegance.',
   ctaLabel = 'Discover',
-  breadcrumbCategory = 'DONO COLLECTION',
-  breadcrumbSubcategory = 'SWITCH ON',
-  onPlayClick,
   onCtaClick,
   sx = {},
 }) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  // 모바일에서 첫 번째 또는 두 번째 이미지 랜덤 선택 (컴포넌트 마운트 시 결정)
+  const showFirstOnMobile = useMemo(() => Math.random() > 0.5, []);
 
-  // 모바일에서 비디오 또는 이미지 랜덤 선택 (컴포넌트 마운트 시 결정)
-  const showVideoOnMobile = useMemo(() => Math.random() > 0.5, []);
+  // 2col hover 상태 관리
+  const [isSecondHovered, setIsSecondHovered] = useState(false);
+  const videoRef = useRef(null);
+
+  // hover 시 비디오 재생 (1.5배속)
+  const handleSecondMouseEnter = useCallback(() => {
+    setIsSecondHovered(true);
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 1.5;
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    }
+  }, []);
+
+  // hover 해제 시 비디오 정지
+  const handleSecondMouseLeave = useCallback(() => {
+    setIsSecondHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, []);
 
   return (
     <Box
@@ -79,65 +96,75 @@ function VVideoSection({
             width: '100%',
           }}
         >
-          {/* Video Thumbnail - 데스크톱 400px 고정 (1:2 비율), 모바일 전체 너비 */}
+          {/* First Image - 데스크톱 400px 고정 (1:2 비율), 모바일 전체 너비 */}
           <Box
             sx={{
-              position: 'relative',
               flexShrink: 0,
               width: { xs: '100%', md: 400 },
               height: { xs: 400, md: 600 },
               overflow: 'hidden',
-              display: { xs: showVideoOnMobile ? 'block' : 'none', md: 'block' },
+              display: { xs: showFirstOnMobile ? 'block' : 'none', md: 'block' },
             }}
           >
             <Box
               component="img"
-              src={videoThumbnail}
-              alt="Video thumbnail"
+              src={firstImage}
+              alt="Gallery image 1"
               sx={{
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
               }}
             />
-            {/* Play Button */}
-            <IconButton
-              onClick={onPlayClick}
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: 50,
-                height: 50,
-                backgroundColor: 'common.white',
-                '&:hover': {
-                  backgroundColor: 'grey.100',
-                },
-              }}
-            >
-              <Play size={24} fill="currentColor" />
-            </IconButton>
           </Box>
 
-          {/* Static Image - 데스크톱 800px 고정 (1:2 비율), 모바일 전체 너비 */}
+          {/* Second Image - 데스크톱 800px 고정 (4:3 비율), 모바일 전체 너비, hover 시 비디오 재생 */}
           <Box
+            onMouseEnter={handleSecondMouseEnter}
+            onMouseLeave={handleSecondMouseLeave}
             sx={{
+              position: 'relative',
               flexShrink: 0,
               width: { xs: '100%', md: 800 },
-              height: { xs: 400, md: 600 },
+              height: { xs: 300, md: 600 },
               overflow: 'hidden',
-              display: { xs: showVideoOnMobile ? 'none' : 'block', md: 'block' },
+              display: { xs: showFirstOnMobile ? 'none' : 'block', md: 'block' },
+              cursor: 'pointer',
             }}
           >
+            {/* 기본 이미지 */}
             <Box
               component="img"
-              src={staticImage}
-              alt="Product"
+              src={secondImage}
+              alt="Gallery image 2"
               sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
+                opacity: isSecondHovered ? 0 : 1,
+                transition: 'opacity 0.3s ease',
+              }}
+            />
+            {/* Hover 비디오 */}
+            <Box
+              component="video"
+              ref={videoRef}
+              src={secondHoverVideo}
+              muted
+              loop
+              playsInline
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                opacity: isSecondHovered ? 1 : 0,
+                transition: 'opacity 0.3s ease',
               }}
             />
           </Box>
@@ -174,52 +201,6 @@ function VVideoSection({
         </Box>
       </Box>
 
-      {/* Left Breadcrumb - 데스크톱만 표시 */}
-      <Box
-        sx={{
-          position: 'absolute',
-          left: { md: 40, lg: 60 },
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: 35,
-          display: { xs: 'none', md: 'flex' },
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          p: 1.25,
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 16,
-            height: 164,
-          }}
-        >
-          <Box
-            sx={{
-              transform: 'rotate(-90deg)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: '"Pretendard Variable", sans-serif',
-                fontSize: 13,
-                fontWeight: 400,
-                lineHeight: 1.2,
-                letterSpacing: '1.3px',
-                color: 'primary.main',
-                textTransform: 'uppercase',
-              }}
-            >
-              {`${breadcrumbCategory} "${breadcrumbSubcategory}"`}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
     </Box>
   );
 }

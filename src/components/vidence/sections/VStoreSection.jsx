@@ -2,13 +2,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { VMenu } from '../shared';
 
+// 기본 이미지
+import defaultStoreImage from '../../../assets/product/main_store.png';
+
 /**
  * VStoreSection 컴포넌트
  * VIDENCE 팝업 스토어 소개 섹션
  *
  * Props:
- * @param {string} image - 스토어 이미지 URL [Required]
- * @param {string} storeLabel - 좌측 세로 라벨 [Optional, 기본값: '@SUNGSU - POPUP STORE']
+ * @param {string} image - 스토어 이미지 URL [Optional]
  * @param {string} description - 설명 텍스트 [Optional]
  * @param {string} ctaLabel - CTA 버튼 텍스트 [Optional, 기본값: 'Discover']
  * @param {function} onCtaClick - CTA 클릭 핸들러 [Optional]
@@ -18,8 +20,7 @@ import { VMenu } from '../shared';
  * <VStoreSection image="/images/store.jpg" />
  */
 function VStoreSection({
-  image = '/store-visual.png',
-  storeLabel = '@SUNGSU - POPUP STORE',
+  image = defaultStoreImage,
   description = "Reflecting the true value of our products.\nWe believe in the unique beauty that develops over time.",
   ctaLabel = 'Discover',
   onCtaClick,
@@ -75,55 +76,6 @@ function VStoreSection({
                 objectFit: 'cover',
               }}
             />
-
-            {/* Vertical Label */}
-            <Box
-              sx={{
-                position: 'absolute',
-                left: 30,
-                top: 0,
-                width: 37,
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                p: 1.25,
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '100%',
-                  height: 262,
-                }}
-              >
-                <Box
-                  sx={{
-                    transform: 'rotate(-90deg)',
-                    whiteSpace: 'nowrap',
-                    width: '100%',
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: '"Pretendard Variable", sans-serif',
-                      fontSize: 14,
-                      fontWeight: 700,
-                      lineHeight: 'normal',
-                      letterSpacing: '2.8px',
-                      color: 'common.white',
-                      textAlign: 'center',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {storeLabel}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
           </Box>
 
           {/* Description */}

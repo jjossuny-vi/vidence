@@ -18,7 +18,6 @@ import VideoScrubbing from '../../media/VideoScrubbing';
  * @param {string} image - 히어로 이미지 URL [Optional]
  * @param {string} video - 히어로 비디오 URL (VideoScrubbing 사용) [Optional]
  * @param {Array} headline - 제목 텍스트 배열 (각 줄) [Required]
- * @param {string} breadcrumbLabel - 좌측 세로 라벨 텍스트 [Optional, 기본값: 'JUST DROPPED THIS WEEK']
  * @param {string} ctaLabel - CTA 버튼 텍스트 [Optional, 기본값: 'Discover']
  * @param {function} onCtaClick - CTA 클릭 핸들러 [Optional]
  * @param {number} height - 섹션 높이 [Optional, 기본값: 1000] - *Ignored in sticky mode*
@@ -29,7 +28,6 @@ function VHeroSection({
   image,
   video,
   headline = ['WEEKEND EDITION'],
-  breadcrumbLabel = 'JUST DROPPED THIS WEEK',
   ctaLabel = 'Discover',
   onCtaClick,
   height = 1000,
@@ -201,53 +199,6 @@ function VHeroSection({
               {line}
             </Typography>
           ))}
-        </Box>
-
-        {/* Left Breadcrumb - Hidden on mobile */}
-        <Box
-          sx={{
-            position: 'absolute',
-            left: 30,
-            top: 106,
-            width: 37,
-            height: 'calc(100% - 106px)',
-            display: { xs: 'none', md: 'flex' },
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 16,
-              height: 164,
-            }}
-          >
-            <Box
-              sx={{
-                transform: 'rotate(-90deg)',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: '"Pretendard Variable", sans-serif',
-                  fontSize: 13,
-                  fontWeight: 400,
-                  lineHeight: 1.2,
-                  letterSpacing: '1.3px',
-                  color: 'primary.main',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {breadcrumbLabel}
-              </Typography>
-            </Box>
-          </Box>
         </Box>
 
         {/* CTA Button */}

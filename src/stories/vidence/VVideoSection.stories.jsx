@@ -14,49 +14,9 @@ export default {
     tags: ['autodocs'],
     parameters: {
         layout: 'fullscreen',
-    },
-    argTypes: {
-        videoThumbnail: {
-            control: 'text',
-            description: '비디오 썸네일 이미지 URL',
-        },
-        staticImage: {
-            control: 'text',
-            description: '정적 이미지 URL',
-        },
-        description: {
-            control: 'text',
-            description: '섹션 설명 텍스트',
-        },
-        ctaLabel: {
-            control: 'text',
-            description: 'CTA 버튼 텍스트',
-        },
-        breadcrumbCategory: {
-            control: 'text',
-            description: '브레드크럼 카테고리',
-        },
-        breadcrumbSubcategory: {
-            control: 'text',
-            description: '브레드크럼 서브카테고리',
-        },
-        onPlayClick: {
-            action: 'playClicked',
-            description: '재생 버튼 클릭 핸들러',
-        },
-        onCtaClick: {
-            action: 'ctaClicked',
-            description: 'CTA 클릭 핸들러',
-        },
-        sx: {
-            control: 'object',
-            description: '추가 스타일',
-        },
-    },
-    parameters: {
         docs: {
             description: {
-                component: 'VIDENCE 비디오/이미지 갤러리 섹션입니다.',
+                component: 'VIDENCE 이미지 갤러리 섹션입니다. (2컬럼 레이아웃)',
             },
             page: () => (
                 <>
@@ -73,16 +33,16 @@ export default {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell sx={{ fontFamily: 'monospace' }}>videoThumbnail</TableCell>
+                                    <TableCell sx={{ fontFamily: 'monospace' }}>firstImage</TableCell>
                                     <TableCell>string</TableCell>
-                                    <TableCell>-</TableCell>
-                                    <TableCell>비디오 썸네일 이미지 URL [Required]</TableCell>
+                                    <TableCell>main_video_001.png</TableCell>
+                                    <TableCell>좌측 이미지 URL (1col, 400px)</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell sx={{ fontFamily: 'monospace' }}>staticImage</TableCell>
+                                    <TableCell sx={{ fontFamily: 'monospace' }}>secondImage</TableCell>
                                     <TableCell>string</TableCell>
-                                    <TableCell>-</TableCell>
-                                    <TableCell>정적 이미지 URL [Required]</TableCell>
+                                    <TableCell>main_video_002.png</TableCell>
+                                    <TableCell>우측 이미지 URL (2col, 800px)</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell sx={{ fontFamily: 'monospace' }}>description</TableCell>
@@ -95,24 +55,6 @@ export default {
                                     <TableCell>string</TableCell>
                                     <TableCell>'Discover'</TableCell>
                                     <TableCell>CTA 버튼 텍스트</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell sx={{ fontFamily: 'monospace' }}>breadcrumbCategory</TableCell>
-                                    <TableCell>string</TableCell>
-                                    <TableCell>'DONO COLLECTION'</TableCell>
-                                    <TableCell>브레드크럼 카테고리</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell sx={{ fontFamily: 'monospace' }}>breadcrumbSubcategory</TableCell>
-                                    <TableCell>string</TableCell>
-                                    <TableCell>'SWITCH ON'</TableCell>
-                                    <TableCell>브레드크럼 서브카테고리</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell sx={{ fontFamily: 'monospace' }}>onPlayClick</TableCell>
-                                    <TableCell>function</TableCell>
-                                    <TableCell>-</TableCell>
-                                    <TableCell>재생 버튼 클릭 핸들러</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell sx={{ fontFamily: 'monospace' }}>onCtaClick</TableCell>
@@ -133,15 +75,37 @@ export default {
             ),
         },
     },
+    argTypes: {
+        firstImage: {
+            control: 'text',
+            description: '좌측 이미지 URL (1col, 400px)',
+        },
+        secondImage: {
+            control: 'text',
+            description: '우측 이미지 URL (2col, 800px)',
+        },
+        description: {
+            control: 'text',
+            description: '섹션 설명 텍스트',
+        },
+        ctaLabel: {
+            control: 'text',
+            description: 'CTA 버튼 텍스트',
+        },
+        onCtaClick: {
+            action: 'ctaClicked',
+            description: 'CTA 클릭 핸들러',
+        },
+        sx: {
+            control: 'object',
+            description: '추가 스타일',
+        },
+    },
 };
 
 export const Default = {
     args: {
-        videoThumbnail: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80',
-        staticImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
         description: 'Share your own style complete with ORR on Instagram by tagging #orr or #orr_today',
         ctaLabel: 'Discover',
-        breadcrumbCategory: 'DONO COLLECTION',
-        breadcrumbSubcategory: 'SWITCH ON',
     },
 };
