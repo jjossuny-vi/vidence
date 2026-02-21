@@ -14,6 +14,9 @@ import categoryImage2 from '../assets/product/main_category_002.png';
 import categoryImage3 from '../assets/product/main_category_003.png';
 import categoryImage4 from '../assets/product/main_category_004.png';
 
+// 히어로 비디오
+import heroVideo from '../assets/video/hero-main.mp4';
+
 /**
  * VidenceMainPage 컴포넌트
  * VIDENCE 메인 페이지 - 모든 섹션을 포함한 전체 페이지
@@ -37,7 +40,7 @@ function VidenceMainPage({
 }) {
   // Default data for demonstration
   const defaultHeroData = {
-    video: '/src/assets/video/hero-main.mp4',
+    video: heroVideo,
     headline: ['WEEKEND EDITION'],
     scrollRange: { start: 0, end: 0.5 },
     ...heroData,
